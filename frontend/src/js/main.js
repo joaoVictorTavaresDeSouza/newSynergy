@@ -106,3 +106,91 @@ if (formCadastro) {
         }
     });
 }
+
+/* === CONTROLE DE SESSÃO E PERFIL === */
+
+const API_BASE = 'http://localhost:8080';
+
+async function recuperarPerfil() {
+    try {
+        const resposta = await fetch(`${API_BASE}/api/painel`, {
+            method: 'GET',
+            credentials: 'include',
+        });
+
+        if (!resposta.ok) return null;
+        const dados = await resposta.json();
+        return dados.nome || 'Usuário';
+    } catch {
+        return null;
+    }
+}
+
+async function trocarLoginPorPerfil() {
+    const nome = await recuperarPerfil();
+    if (!nome) return;
+
+    const loginLinks = [...document.querySelectorAll('a[href*="login.html"], a.login, .login')];
+    const linkLogin = loginLinks.find((link) => {
+        const href = (link.getAttribute('href') || '').toLowerCase();
+        return href.includes('login.html') || href === './login.html' || href === '/login.html';
+    }) || loginLinks[0];
+
+    if (!linkLogin) return;
+
+    const li = linkLogin.closest('li') || linkLogin.parentElement;
+    if (!li) return;
+
+    const perfilHref = window.location.pathname.includes('/src/pages/')
+        ? './perfil.html'
+        : './src/pages/perfil.html';
+
+    const nomeCurto = nome.trim().split(' ')[0];
+    const perfil = document.createElement('a');
+    perfil.href = perfilHref;
+    perfil.className = 'login perfilUsuario';
+    perfil.innerHTML = `<strong>👤 ${nomeCurto}</strong>`;
+    perfil.title = `Perfil de ${nome}`;
+
+    li.innerHTML = '';
+    li.appendChild(perfil);
+}
+
+window.addEventListener('load', async () => {
+    await trocarLoginPorPerfil();
+    const paginaPerfil = document.body.dataset.page === 'perfil';
+    if (!paginaPerfil) return;
+
+    const nomeEl = document.getElementById('nomeUsuario');
+    const emailEl = document.getElementById('emailUsuario');
+    const logoutBtn = document.getElementById('logoutBtn');
+
+    const nome = await recuperarPerfil();
+    if (nomeEl) nomeEl.textContent = nome || 'Usuário';
+    if (emailEl) {
+        emailEl.textContent = 'Carregando...';
+        try {
+            const resposta = await fetch(`${API_BASE}/api/painel`, {
+                method: 'GET',
+                credentials: 'include',
+            });
+            const dados = await resposta.json().catch(() => ({}));
+            emailEl.textContent = dados.email || 'E-mail não informado';
+        } catch {
+            emailEl.textContent = 'E-mail não informado';
+        }
+    }
+
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', async () => {
+            try {
+                await fetch(`${API_BASE}/api/sair`, {
+                    method: 'POST',
+                    credentials: 'include',
+                });
+            } finally {
+                window.location.href = './login.html';
+            }
+        });
+    }
+});

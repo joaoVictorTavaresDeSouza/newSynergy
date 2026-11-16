@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../../public/nSynergyIco.ico" type="image/x-icon">
+    <title>Perfil | Natural Synergy</title>
+    <link rel="stylesheet" href="../css/login.css">
+    <style>
+        body {
+            background: var(--fundo);
+            color: var(--texto);
+        }
+
+        .paginaPerfil {
+            min-height: calc(100vh - 72px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 3rem 1.25rem;
+            background: var(--fundo);
+        }
+
+        .cardPerfil {
+            position: relative;
+            z-index: 1;
+            width: min(560px, 100%);
+            background: rgba(15, 29, 47, 0.9);
+            border: 1px solid var(--borda);
+            border-radius: 18px;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+            padding: 2rem;
+        }
+
+        .cabecalhoPerfil {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .avatar {
+            width: 76px;
+            height: 76px;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            font-size: 2rem;
+            background: #1a2b3f;
+            border: 1px solid rgba(255,255,255,0.12);
+            color: var(--texto);
+            box-shadow: none;
+        }
+
+        .tituloPerfil {
+            font-family: var(--fonte-titulo);
+            font-size: clamp(1.8rem, 2vw, 2.2rem);
+            font-weight: 800;
+            letter-spacing: -0.04em;
+            color: var(--texto);
+        }
+
+        .subtituloPerfil {
+            color: var(--texto-suave);
+            font-size: 0.88rem;
+        }
+
+        .infoPerfil {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .campoPerfil {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid var(--borda);
+            border-radius: 12px;
+            padding: 0.85rem 1rem;
+        }
+
+        .rotulo {
+            display: block;
+            margin-bottom: 0.45rem;
+            color: var(--texto-suave);
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .valor {
+            font-size: 1.08rem;
+            font-weight: 700;
+            color: var(--texto);
+            word-break: break-word;
+        }
+
+        .botoesPerfil {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .botaoPerfil {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.9rem 1.2rem;
+            min-width: 160px;
+            border-radius: 999px;
+            border: 1px solid var(--destaque);
+            background: var(--destaque);
+            color: var(--fundo);
+            font-weight: 800;
+            line-height: 1;
+            transition: none;
+            box-shadow: none;
+        }
+
+        .botaoPerfil:hover,
+        .botaoPerfil:focus-visible {
+            transform: none;
+            filter: none;
+        }
+
+        .botaoPerfil.secundario {
+            background: transparent;
+            border-color: var(--borda);
+            color: var(--texto);
+            box-shadow: none;
+        }
+
+        .botaoPerfil.secundario:hover,
+        .botaoPerfil.secundario:focus-visible {
+            border-color: var(--destaque);
+            color: var(--destaque);
+        }
+
+        .paginaPerfil::before,
+        .paginaPerfil::after {
+            display: none;
+        }
+
+        @media (max-width: 680px) {
+            .cardPerfil {
+                padding: 1.4rem 1rem;
+            }
+
+            .botoesPerfil {
+                flex-direction: column;
+            }
+
+            .botaoPerfil {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body data-page="perfil">
+    <div id="loader">
+        <div class="indicadorCarregamento"></div>
+    </div>
+
+    <header class="header">
+        <div class="container">
+            <a href="../../index.html" class="logo">
+                <img src="../../src/assets/logoNaturalSynergy.png" alt="Logo">
+            </a>
+
+            <button class="hamburguer" id="hamburguer" type="button" aria-label="Abrir menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <nav id="nav-menu">
+                <ul class="navigation">
+                    <li><a href="../../index.html">Início</a></li>
+                    <li><a href="./instructions.html">Instruções</a></li>
+                    <li><a href="./hardware.html">Hardware</a></li>
+                    <li><a href="./references.html">Referências</a></li>
+                    <li><a href="./team.html">Equipe</a></li>
+                    <li><a href="./game.html">Jogo</a></li>
+                    <li><a href="./login.html" class="login">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="paginaPerfil">
+        <section class="cardPerfil">
+            <div class="cabecalhoPerfil">
+                <div class="avatar">👤</div>
+                <div>
+                    <h1 class="tituloPerfil">Meu perfil</h1>
+                    <p class="subtituloPerfil">Gerencie sua conta e continue explorando o projeto.</p>
+                </div>
+            </div>
+
+            <div class="infoPerfil">
+                <div class="campoPerfil">
+                    <span class="rotulo">Nome</span>
+                    <div class="valor" id="nomeUsuario">Carregando...</div>
+                </div>
+
+                <div class="campoPerfil">
+                    <span class="rotulo">E-mail</span>
+                    <div class="valor" id="emailUsuario">Carregando...</div>
+                </div>
+            </div>
+
+            <div class="botoesPerfil">
+                <a href="./software.html" class="botaoPerfil">Ir para software</a>
+                <button type="button" id="logoutBtn" class="botaoPerfil secundario">Sair</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="../js/main.js"></script>
+</body>
+</html>
